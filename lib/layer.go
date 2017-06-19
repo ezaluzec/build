@@ -19,6 +19,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/containers/build/lib/oci"
 	"github.com/containers/build/util"
@@ -26,6 +27,9 @@ import (
 )
 
 func (a *ACBuild) MarkLayerDirty(layerDir string) (err error) {
+	if strings.HasSuffix(layerDir, "new-layer") {
+		return nil
+	}
 	return ioutil.WriteFile(layerDir+".dirty", nil, 0644)
 }
 
